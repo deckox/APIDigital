@@ -28,7 +28,8 @@ namespace DigitalAPI.Models
         public ClientReturn(ClientData clientData)
         {
             Token = CircularArray(clientData);
-            RegistrationDate = DateTime.UtcNow;
+            
+            CardId = clientData.CardId;
         }
 
         public int CircularArray(ClientData clientData)

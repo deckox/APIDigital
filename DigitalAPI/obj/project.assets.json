@@ -12705,11 +12705,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\workspace\\Digital\\DigitalAPI\\DigitalAPI\\DigitalAPI.csproj",
+      "projectUniqueName": "C:\\workspace\\DigitalAPI_1\\DigitalAPI\\DigitalAPI.csproj",
       "projectName": "DigitalAPI",
-      "projectPath": "C:\\workspace\\Digital\\DigitalAPI\\DigitalAPI\\DigitalAPI.csproj",
+      "projectPath": "C:\\workspace\\DigitalAPI_1\\DigitalAPI\\DigitalAPI.csproj",
       "packagesPath": "C:\\Users\\akimura\\.nuget\\packages\\",
-      "outputPath": "C:\\workspace\\Digital\\DigitalAPI\\DigitalAPI\\obj\\",
+      "outputPath": "C:\\workspace\\DigitalAPI_1\\DigitalAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

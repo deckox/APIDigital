@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.IO;
+using DigitalAPI.Models;
 
 namespace DigitalAPI.Core.Repositories
 {
@@ -14,7 +15,7 @@ namespace DigitalAPI.Core.Repositories
         private string Database;
 
         private const string Sql_CreateClientData = "CREATE TABLE ClientData (CardId INTEGER PRIMARY KEY AUTOINCREMENT, CustomerId INTEGER, CardNumber INTEGER, CVV INTEGER, RegistrationDate DATETIME)";
-
+        private const string Sql_SelectLastCardId = "SELECT* from Clientdata order by cardid desc limit 1";
         public BaseRepository()
         {
             Database = Path.Combine(System.AppContext.BaseDirectory, DataBaseFile);
@@ -48,7 +49,6 @@ namespace DigitalAPI.Core.Repositories
                 connection.Open();
                 var command = new SQLiteCommand(connection);
 
-
                 command.CommandText = sqlcommand;
                 var result = command.ExecuteNonQuery();
 
@@ -62,6 +62,50 @@ namespace DigitalAPI.Core.Repositories
             {
                 return false;
             }
+        }
+
+        public ClientData SearchForCardId()
+        {
+            try
+            {
+                var connection = GetConnection();
+                connection.Open();
+                var command = new SQLiteCommand(connection);
+
+
+             
+                command.CommandText = Sql_SelectLastCardId;
+                var client = new ClientData();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        client = Parse(reader);
+                    }
+                }
+
+                command.Dispose();
+                connection.Close();
+                connection.Dispose();
+
+                return client;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        private ClientData Parse(SQLiteDataReader reader)
+        {
+            var client = new ClientData()
+            {
+                CardId = int.Parse(reader["CardId"].ToString()),
+                CardNumber = int.Parse(reader["CardNumber"].ToString()),
+                CVV = int.Parse(reader["CVV"].ToString()),
+            };
+            return client;
         }
     }
 }
