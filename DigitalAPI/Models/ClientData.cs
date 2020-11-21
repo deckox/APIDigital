@@ -28,7 +28,7 @@ namespace DigitalAPI.Models
         public ClientReturn(ClientData clientData)
         {
             Token = CircularArray(clientData);
-            
+            RegistrationDate = clientData.RegistrationDate;
             CardId = clientData.CardId;
         }
 

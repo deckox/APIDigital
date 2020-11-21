@@ -23,23 +23,24 @@ namespace DigitalAPI.Core.Repositories
 
         public bool Save(ClientData clientData)
         {
-            var data = clientData.RegistrationDate;
-            var dataConvertida = data.ToString("yyyy-MM-dd");
+            var date = clientData.RegistrationDate;
+            var convertedDate = date.ToString("yyyy-MM-dd HH:mm:ss");
             var sql = "";
-           // var aux = new ClientData();
+
             if (clientData.CardId == 0) //if cardId 0 its a new user
-                sql = string.Format(Sql_Insert, clientData.CustomerId, clientData.CardNumber, clientData.CVV, dataConvertida);
+                sql = string.Format(Sql_Insert, clientData.CustomerId, clientData.CardNumber, clientData.CVV, convertedDate);
             else //user with Id then user should be updated
-                sql = string.Format(Sql_Update, clientData.CustomerId, clientData.CardNumber, clientData.CVV, dataConvertida);
+                sql = string.Format(Sql_Update, clientData.CustomerId, clientData.CardNumber, clientData.CVV, convertedDate);
 
             var result = ExecuteCommand(sql);
 
-            //if (result == true)
-            //{
-            //   aux = SearchForCardId();
-            //}
-
-          //  clientData.CardId = aux.CardId;
+            if (result == true)
+            {
+                var aux = new ClientData();
+                aux = SearchForCardId();
+                clientData.CardId = aux.CardId;
+                clientData.RegistrationDate = aux.RegistrationDate;
+            }
 
             return result;
         }
@@ -78,9 +79,9 @@ namespace DigitalAPI.Core.Repositories
             {
                 CardId = int.Parse(reader["CardId"].ToString()),
                 CustomerId = int.Parse(reader["CustomerId"].ToString()),
+                CardNumber = long.Parse(reader["CardNumber"].ToString()),
                 CVV = int.Parse(reader["CVV"].ToString()),
-                RegistrationDate = Convert.ToDateTime(reader["RegistrationDate"]),
-               
+                RegistrationDate = DateTime.Parse(reader["RegistrationDate"].ToString()),
             };
             return client;
         }

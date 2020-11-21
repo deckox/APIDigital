@@ -102,8 +102,9 @@ namespace DigitalAPI.Core.Repositories
             var client = new ClientData()
             {
                 CardId = int.Parse(reader["CardId"].ToString()),
-                CardNumber = int.Parse(reader["CardNumber"].ToString()),
+                CardNumber = long.Parse(reader["CardNumber"].ToString()),
                 CVV = int.Parse(reader["CVV"].ToString()),
+                RegistrationDate = DateTime.Parse(reader["RegistrationDate"].ToString()),
             };
             return client;
         }
