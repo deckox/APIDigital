@@ -21,7 +21,7 @@ namespace DigitalAPI.ControllersValidation
             {
                 var clientRepository = new ClientRepository();
 
-                var listaDeAgendamentosDoBD = clientRepository.Listar();
+                var listaDeAgendamentosDoBD = clientRepository.ListAllClientsData();
 
                 var jsonResult = JsonConvert.SerializeObject(listaDeAgendamentosDoBD);
 
@@ -39,13 +39,13 @@ namespace DigitalAPI.ControllersValidation
             try
             {
                 var clientRepository = new ClientRepository();
-
-                if (clientData.CVV > 1)
+                
+                if (clientRepository.ClientDataInformationValidation(clientData) == true)
                 {
-                    return false;
+                    return true;
                 }
 
-                return true;
+                return false;
            
             }
             catch (Exception msg)

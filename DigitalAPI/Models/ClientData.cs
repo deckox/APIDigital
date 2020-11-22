@@ -12,6 +12,7 @@ namespace DigitalAPI.Models
         public long CardNumber { get; set; }
         public int CVV { get; set; }
         public DateTime RegistrationDate { get; set; }
+        public long Token { get; set; }
 
         public ClientData()
         {

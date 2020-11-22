@@ -64,7 +64,7 @@ namespace DigitalAPI.Core.Repositories
             }
         }
 
-        public ClientData SearchForCardId()
+        public ClientData GetClientDataInformation()
         {
             try
             {

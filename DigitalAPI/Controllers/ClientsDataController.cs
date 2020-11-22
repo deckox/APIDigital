@@ -21,7 +21,7 @@ namespace DigitalAPI.Controllers
             {
                 var clientRepository = new ClientRepository();
 
-                var listaDeAgendamentosDoBD = clientRepository.Listar();
+                var listaDeAgendamentosDoBD = clientRepository.ListAllClientsData();
 
                 var jsonResult = JsonConvert.SerializeObject(listaDeAgendamentosDoBD);
 
