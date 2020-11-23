@@ -34,7 +34,7 @@ namespace DigitalAPI.Controllers
         }
 
         [HttpPost]
-        public string APIOne(ClientData clientData)
+        public string API_SaveCustomerDataOnDB(ClientData clientData)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace DigitalAPI.Controllers
 
                 else
                 {
-                    return "nao";
+                    return "It was not possible to save client information, check with support team";
                 }
             }
             catch (Exception msg)

@@ -73,7 +73,7 @@ namespace DigitalAPI.Core.Repositories
             return result;
         }
 
-        public bool ClientDataInformationValidation(ClientData clientData)
+        public bool IsClientDataInformationValidationOK(ClientData clientData)
         {
             var connection = GetConnection();
             connection.Open();
@@ -87,6 +87,7 @@ namespace DigitalAPI.Core.Repositories
                 while (reader.Read())
                 {
                     var clientOnDataBase = Parse(reader);
+
                     var clientreturn = new ClientReturn(clientOnDataBase);
                     var generateNewToken = clientreturn.CircularArray(clientOnDataBase);
 

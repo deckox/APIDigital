@@ -39,4 +39,3 @@ C:\workspace\DigitalAPI_1\DigitalAPI\bin\Debug\netcoreapp2.1\DigitalAPI.pdb
 C:\workspace\DigitalAPI_1\DigitalAPI\obj\Debug\netcoreapp2.1\DigitalAPI.RazorTargetAssemblyInfo.cache
 C:\workspace\DigitalAPI_1\DigitalAPI\obj\Debug\netcoreapp2.1\DigitalAPI.dll
 C:\workspace\DigitalAPI_1\DigitalAPI\obj\Debug\netcoreapp2.1\DigitalAPI.pdb
-C:\workspace\DigitalAPI_1\DigitalAPI\obj\Debug\netcoreapp2.1\DigitalAPI.csprojAssemblyReference.cache

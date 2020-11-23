@@ -14,33 +14,21 @@ namespace DigitalAPI.ControllersValidation
     [ApiController]
     public class ValidationOfClientsDataController : ControllerBase
     {
-        [HttpGet]
-        public string GetClientDatas1()
-        {
-            try
-            {
-                var clientRepository = new ClientRepository();
-
-                var listaDeAgendamentosDoBD = clientRepository.ListAllClientsData();
-
-                var jsonResult = JsonConvert.SerializeObject(listaDeAgendamentosDoBD);
-
-                return jsonResult;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
-
         [HttpPost]
-        public bool APITwo(ClientData clientData)
+        public bool API_ValidateToken(ClientData clientData)
         {
             try
             {
+                var lengthCVV = clientData.CVV.ToString().Length;
+
+                if (lengthCVV > 5)
+                {
+                    return false;
+                }
+
                 var clientRepository = new ClientRepository();
-                
-                if (clientRepository.ClientDataInformationValidation(clientData) == true)
+
+                if (clientRepository.IsClientDataInformationValidationOK(clientData) == true)
                 {
                     return true;
                 }
