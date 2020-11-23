@@ -6,6 +6,7 @@ using DigitalAPI.Core.Repositories;
 using DigitalAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace DigitalAPI.Controllers
@@ -14,14 +15,29 @@ namespace DigitalAPI.Controllers
     [ApiController]
     public class ClientsDataController : ControllerBase
     {
+        private IClientRepository _ClientRepository { get; set; }
+        public IClientRepository ClientRepository
+        {
+            get
+            {
+                if (_ClientRepository == null)
+                {
+                    return new ClientRepository();
+                }
+                return _ClientRepository;
+            }
+
+            set { _ClientRepository = value; }
+        }
+
         [HttpGet]
         public string GetClientDatas()
         {
             try
             {
-                var clientRepository = new ClientRepository();
+                
 
-                var listaDeAgendamentosDoBD = clientRepository.ListAllClientsData();
+                var listaDeAgendamentosDoBD = ClientRepository.ListAllClientsData();
 
                 var jsonResult = JsonConvert.SerializeObject(listaDeAgendamentosDoBD);
 
@@ -40,8 +56,7 @@ namespace DigitalAPI.Controllers
             {
                 var lengthCardNumber = clientData.CardNumber.ToString().Length;
                 var lengthCVV = clientData.CVV.ToString().Length;
-
-                var clientRepository = new ClientRepository();
+                
 
                 if (lengthCardNumber > 16)
                 {
@@ -53,7 +68,7 @@ namespace DigitalAPI.Controllers
                     return "CVV has a max of 5 characters allowed";
                 }
 
-                else if (clientRepository.Save(clientData) == true)
+                else if (ClientRepository.Save(clientData).Result == true)
                 {
                     var clientreturn = new ClientReturn(clientData);
                     var jsonResult = JsonConvert.SerializeObject(clientreturn);
@@ -62,13 +77,14 @@ namespace DigitalAPI.Controllers
 
                 else
                 {
-                    return "It was not possible to save client information, check with support team";
+                    return "It was not possible to save client information, contact the support team";
                 }
             }
             catch (Exception msg)
             {
-
-                throw;
+                System.Diagnostics.Debug.WriteLine(msg);
+                return "It was not possible to save client information, contact the support team"; 
+                
             }
        
         }

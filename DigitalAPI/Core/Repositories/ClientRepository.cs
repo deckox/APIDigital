@@ -7,7 +7,15 @@ using System.Threading.Tasks;
 
 namespace DigitalAPI.Core.Repositories
 {
-    public class ClientRepository : BaseRepository
+    public interface IClientRepository
+    {
+        Task<bool> Save(ClientData clientData);
+        List<ClientData> ListAllClientsData();
+
+        Task<bool> IsClientDataInformationValidationOK(ClientData clientData);
+    }
+
+    public class ClientRepository : BaseRepository, IClientRepository
     {
         private const string Sql_Insert = "INSERT into ClientData (CustomerId,CardNumber,CVV,RegistrationDate) VALUES ('{0}','{1}','{2}','{3}')";
         private const string Sql_Update = "UPDATE ClientData SET CustomerId='{1}',CardNumber='{2}',CVV='{3}',RegistrationDate='{4}' WHERE Id = {0}";
@@ -22,7 +30,7 @@ namespace DigitalAPI.Core.Repositories
         //    return ExecuteCommand(sql);
         //}
 
-        public bool Save(ClientData clientData)
+        public async Task<bool> Save(ClientData clientData)
         {
             var date = clientData.RegistrationDate;
             var convertedDate = date.ToString("yyyy-MM-dd HH:mm:ss");
@@ -73,7 +81,7 @@ namespace DigitalAPI.Core.Repositories
             return result;
         }
 
-        public bool IsClientDataInformationValidationOK(ClientData clientData)
+        public async Task<bool> IsClientDataInformationValidationOK(ClientData clientData)
         {
             var connection = GetConnection();
             connection.Open();
@@ -99,11 +107,6 @@ namespace DigitalAPI.Core.Repositories
                         result = false;
                     }
 
-                    else if (clientData.CustomerId != clientOnDataBase.CustomerId )
-                    {
-                        result = false;
-                    }
-
                     else if (clientOnDataBase.CustomerId != clientData.CustomerId)
                     {
                         result = false;
@@ -113,7 +116,8 @@ namespace DigitalAPI.Core.Repositories
                     {
                         result = false;
                     }
-                    
+
+                    System.Diagnostics.Debug.WriteLine(clientOnDataBase.CardId);
                 }
             }
 

@@ -14,21 +14,35 @@ namespace DigitalAPI.ControllersValidation
     [ApiController]
     public class ValidationOfClientsDataController : ControllerBase
     {
+        private IClientRepository _ClientRepository { get; set; }
+        public IClientRepository ClientRepository
+        {
+            get
+            {
+                if (_ClientRepository == null)
+                {
+                    return new ClientRepository();
+                }
+                return _ClientRepository;
+            }
+
+            set { _ClientRepository = value; }
+        }
+
         [HttpPost]
         public bool API_ValidateToken(ClientData clientData)
         {
             try
             {
                 var lengthCVV = clientData.CVV.ToString().Length;
+                var clientRepository = new ClientRepository();
 
                 if (lengthCVV > 5)
                 {
                     return false;
                 }
 
-                var clientRepository = new ClientRepository();
-
-                if (clientRepository.IsClientDataInformationValidationOK(clientData) == true)
+                else if (clientRepository.IsClientDataInformationValidationOK(clientData).Result == true)
                 {
                     return true;
                 }
@@ -39,7 +53,7 @@ namespace DigitalAPI.ControllersValidation
             catch (Exception msg)
             {
 
-                throw;
+                return false; 
             }
 
         }
