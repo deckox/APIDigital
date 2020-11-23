@@ -35,14 +35,14 @@ namespace DigitalAPI.ControllersValidation
             try
             {
                 var lengthCVV = clientData.CVV.ToString().Length;
-                var clientRepository = new ClientRepository();
+               
 
                 if (lengthCVV > 5)
                 {
                     return false;
                 }
 
-                else if (clientRepository.IsClientDataInformationValidationOK(clientData).Result == true)
+                else if (ClientRepository.IsClientDataInformationValidationOK(clientData).Result == true)
                 {
                     return true;
                 }

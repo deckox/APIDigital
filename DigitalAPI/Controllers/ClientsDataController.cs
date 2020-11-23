@@ -56,7 +56,6 @@ namespace DigitalAPI.Controllers
             {
                 var lengthCardNumber = clientData.CardNumber.ToString().Length;
                 var lengthCVV = clientData.CVV.ToString().Length;
-                
 
                 if (lengthCardNumber > 16)
                 {
@@ -72,6 +71,7 @@ namespace DigitalAPI.Controllers
                 {
                     var clientreturn = new ClientReturn(clientData);
                     var jsonResult = JsonConvert.SerializeObject(clientreturn);
+                    Console.WriteLine("I'm IN!!!!!!");
                     return jsonResult;
                 }
 

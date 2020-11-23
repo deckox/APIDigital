@@ -71,5 +71,35 @@ namespace DigitalAPI.Models
             }
             return token;
         }
+
+        public int Array(ClientData clientData, int [] arrayEntry)
+        {
+            int token = 0;
+
+            var arrayExit = new int[arrayEntry.Length];
+            var realRotate = clientData.CVV % arrayEntry.Length;
+            var cardNumber = clientData.CardNumber.ToString();
+            var lastFourNumbers = cardNumber.Substring(cardNumber.Length - 4);
+            char[] chars = lastFourNumbers.ToCharArray();
+            int[] numbers = chars.Select(_ => int.Parse(_.ToString())).ToArray();
+
+            for (int i = 0; i < arrayEntry.Length; i++)
+            {
+                int indexDest;
+                if (i + realRotate >= arrayEntry.Length)
+                {
+                    indexDest = (i + realRotate) - arrayEntry.Length;
+                }
+                else
+                {
+                    indexDest = i + realRotate;
+                }
+
+                arrayEntry[indexDest] = arrayEntry[i];
+            }
+
+
+            return token;
+        }
     }
 }
