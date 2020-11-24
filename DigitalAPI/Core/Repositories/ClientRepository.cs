@@ -101,6 +101,9 @@ namespace DigitalAPI.Core.Repositories
                 {
                     var clientOnDataBase = Parse(reader);
 
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(" ########################### Card Number: " + clientOnDataBase.CardNumber.ToString() + " ###########################", Console.ForegroundColor);
+
                     var clientreturn = new ClientReturn(clientOnDataBase);
                     var generateNewToken = clientreturn.CircularArray(clientOnDataBase);
 
@@ -122,8 +125,10 @@ namespace DigitalAPI.Core.Repositories
                         result = false;
                     }
 
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(" ########################### Card Number: " + clientOnDataBase.CardNumber.ToString() + " ###########################", Console.ForegroundColor);
+                    else if (clientData.CVV != clientOnDataBase.CVV)
+                    {
+                        result = false;
+                    }
                 }
 
             }
