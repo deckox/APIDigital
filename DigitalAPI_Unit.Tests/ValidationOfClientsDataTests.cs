@@ -37,7 +37,8 @@ namespace DigitalAPI.Tests
 
         }
 
-        public void ValidationData_OnDatabase_TokenExpired()
+        [Test]
+        public void ValidationData_OnDatabase_Fail()
         {
             var clientController = new ValidationOfClientsDataController();
 
@@ -51,55 +52,11 @@ namespace DigitalAPI.Tests
 
 
             var Service = new Mock<IClientRepository>();
-            Service.Setup(_ => _.IsClientDataInformationValidationOK(clientData)).ReturnsAsync(true);
+            Service.Setup(_ => _.IsClientDataInformationValidationOK(It.IsAny<ClientData>())).ReturnsAsync(false);
             clientController.ClientRepository = Service.Object;
 
             var validateTokenResponse = clientController.API_ValidateToken(clientData);
-            Assert.That(validateTokenResponse, Is.EqualTo(true));
-
-        }
-
-        public void ValidationData_OnDatabase_CustomerIsNotOwnerOfTheCard()
-        {
-            var clientController = new ValidationOfClientsDataController();
-
-            var clientData = new ClientData()
-            {
-                CustomerId = 11,
-                CardId = 23,
-                Token = 2222,
-                CVV = 2222
-            };
-
-
-            var Service = new Mock<IClientRepository>();
-            Service.Setup(_ => _.IsClientDataInformationValidationOK(clientData)).ReturnsAsync(true);
-            clientController.ClientRepository = Service.Object;
-
-            var validateTokenResponse = clientController.API_ValidateToken(clientData);
-            Assert.That(validateTokenResponse, Is.EqualTo(true));
-
-        }
-
-        public void ValidationData_OnDatabase_TokenNotMatch()
-        {
-            var clientController = new ValidationOfClientsDataController();
-
-            var clientData = new ClientData()
-            {
-                CustomerId = 11,
-                CardId = 23,
-                Token = 2222,
-                CVV = 2222
-            };
-
-
-            var Service = new Mock<IClientRepository>();
-            Service.Setup(_ => _.IsClientDataInformationValidationOK(It.IsAny<ClientData>())).ReturnsAsync(true);
-            clientController.ClientRepository = Service.Object;
-
-            var validateTokenResponse = clientController.API_ValidateToken(clientData);
-            Assert.That(validateTokenResponse, Is.EqualTo(true));
+            Assert.That(validateTokenResponse, Is.EqualTo(false));
 
         }
 

@@ -36,9 +36,7 @@ namespace DigitalAPI.Core.Repositories
             {
                 SQLiteConnection.CreateFile(Database);
                 ExecuteCommand(Sql_CreateClientData);
-                 
             }
-
         }
 
         public bool ExecuteCommand(string sqlcommand)

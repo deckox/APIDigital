@@ -35,11 +35,9 @@ namespace DigitalAPI.Controllers
         {
             try
             {
-                
+                var listofClientDatas = ClientRepository.ListAllClientsData();
 
-                var listaDeAgendamentosDoBD = ClientRepository.ListAllClientsData();
-
-                var jsonResult = JsonConvert.SerializeObject(listaDeAgendamentosDoBD);
+                var jsonResult = JsonConvert.SerializeObject(listofClientDatas);
 
                 return jsonResult;
             }
@@ -71,7 +69,6 @@ namespace DigitalAPI.Controllers
                 {
                     var clientreturn = new ClientReturn(clientData);
                     var jsonResult = JsonConvert.SerializeObject(clientreturn);
-                    Console.WriteLine("I'm IN!!!!!!");
                     return jsonResult;
                 }
 
@@ -82,7 +79,7 @@ namespace DigitalAPI.Controllers
             }
             catch (Exception msg)
             {
-                System.Diagnostics.Debug.WriteLine(msg);
+                Console.WriteLine(msg);
                 return "It was not possible to save client information, contact the support team"; 
                 
             }

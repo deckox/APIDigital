@@ -92,6 +92,11 @@ namespace DigitalAPI.Core.Repositories
 
             using (var reader = command.ExecuteReader())
             {
+                if (reader.HasRows != true)
+                {
+                    result = false;
+                }
+
                 while (reader.Read())
                 {
                     var clientOnDataBase = Parse(reader);
@@ -106,7 +111,7 @@ namespace DigitalAPI.Core.Repositories
                     {
                         result = false;
                     }
-
+                    
                     else if (clientOnDataBase.CustomerId != clientData.CustomerId)
                     {
                         result = false;
@@ -120,6 +125,7 @@ namespace DigitalAPI.Core.Repositories
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(" ########################### Card Number: " + clientOnDataBase.CardNumber.ToString() + " ###########################", Console.ForegroundColor);
                 }
+
             }
 
             return result;

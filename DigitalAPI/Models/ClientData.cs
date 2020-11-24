@@ -20,86 +20,53 @@ namespace DigitalAPI.Models
         }
     }
 
-    public class ClientReturn
-    {
-        public DateTime RegistrationDate { get; set; }
-        public long Token { get; set; }
-        public int CardId { get; set; }
+    //public class ClientReturn
+    //{
+    //    public DateTime RegistrationDate { get; set; }
+    //    public long Token { get; set; }
+    //    public int CardId { get; set; }
 
-        public ClientReturn(ClientData clientData)
-        {
-            Token = CircularArray(clientData);
-            RegistrationDate = clientData.RegistrationDate;
-            CardId = clientData.CardId;
-        }
+    //    public ClientReturn(ClientData clientData)
+    //    {
+    //        Token = CircularArray(clientData);
+    //        RegistrationDate = clientData.RegistrationDate;
+    //        CardId = clientData.CardId;
+    //    }
 
-        public int CircularArray(ClientData clientData)
-        {
-            int token = 0;
-            var tokenNumber = new List<int>();
-            var cardNumber = clientData.CardNumber.ToString();
-            var lastFourNumbers = cardNumber.Substring(cardNumber.Length - 4);
-            char[] chars = lastFourNumbers.ToCharArray();
-            int[] numbers = chars.Select(_ => int.Parse(_.ToString())).ToArray();
-            tokenNumber.Add(numbers[0]);
-            tokenNumber.Add(numbers[1]);
-            tokenNumber.Add(numbers[2]);
-            tokenNumber.Add(numbers[3]);
+    //    public int CircularArray(ClientData clientData)
+    //    {
+    //        var cardNumber = clientData.CardNumber.ToString();
+    //        var lastFourNumbers = cardNumber.Substring(cardNumber.Length - 4);
+    //        char[] chars = lastFourNumbers.ToCharArray();
+    //        int[] numbers = chars.Select(_ => int.Parse(_.ToString())).ToArray();
 
-            for (int i = 0; i < clientData.CVV; i++)
-            {
-                var aux = tokenNumber.Last();
-                tokenNumber.RemoveAt(tokenNumber.Count - 1);
-                tokenNumber.Insert(0, aux);
+    //        var token = int.Parse(string.Join("", ArrayRotate(clientData.CVV, numbers)));
+    //        return token;
+    //    }
 
-              /*  [1,2,3,4]
-                [4,1,2,3]
-                [3,4,1,2]
-                [2,3,4,1]
-                [1,2,3,4] */
+    //    public int[] ArrayRotate(int rotation, int[] arrayEntry)
+    //    {
+    //        var arrayExit = new int[arrayEntry.Length];
+    //        var realRotate = rotation % arrayEntry.Length;
 
-                // cvv % numero de array  999 / 4 
+    //        for (int i = 0; i < arrayEntry.Length; i++)
+    //        {
+    //            int indexDest;
+    //            if (i + realRotate >= arrayEntry.Length)
+    //            {
+    //                indexDest = (i + realRotate) - arrayEntry.Length;
+    //            }
+    //            else
+    //            {
+    //                indexDest = i + realRotate;
+    //            }
 
-                if (i == clientData.CVV - 1)
-                {
-                    var concatenateToken = tokenNumber[0].ToString();
-                    concatenateToken = concatenateToken + tokenNumber[1].ToString();
-                    concatenateToken = concatenateToken + tokenNumber[2].ToString();
-                    concatenateToken = concatenateToken + tokenNumber[3].ToString();
-                    token = int.Parse(concatenateToken);
-                }
-            }
-            return token;
-        }
+    //            arrayExit[indexDest] = arrayEntry[i];
+    //        }
 
-        public int Array(ClientData clientData, int [] arrayEntry)
-        {
-            int token = 0;
+    //        return arrayExit;
 
-            var arrayExit = new int[arrayEntry.Length];
-            var realRotate = clientData.CVV % arrayEntry.Length;
-            var cardNumber = clientData.CardNumber.ToString();
-            var lastFourNumbers = cardNumber.Substring(cardNumber.Length - 4);
-            char[] chars = lastFourNumbers.ToCharArray();
-            int[] numbers = chars.Select(_ => int.Parse(_.ToString())).ToArray();
+    //    }
 
-            for (int i = 0; i < arrayEntry.Length; i++)
-            {
-                int indexDest;
-                if (i + realRotate >= arrayEntry.Length)
-                {
-                    indexDest = (i + realRotate) - arrayEntry.Length;
-                }
-                else
-                {
-                    indexDest = i + realRotate;
-                }
-
-                arrayEntry[indexDest] = arrayEntry[i];
-            }
-
-
-            return token;
-        }
-    }
+    //}
 }
