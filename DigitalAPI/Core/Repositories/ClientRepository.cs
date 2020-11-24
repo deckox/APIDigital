@@ -117,7 +117,8 @@ namespace DigitalAPI.Core.Repositories
                         result = false;
                     }
 
-                    System.Diagnostics.Debug.WriteLine(clientOnDataBase.CardId);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(" ########################### Card Number: " + clientOnDataBase.CardNumber.ToString() + " ###########################", Console.ForegroundColor);
                 }
             }
 
