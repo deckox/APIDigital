@@ -60,6 +60,16 @@ namespace DigitalAPI.Controllers
                     return "Card Number has a max of 16 characters allowed";
                 }
 
+                else if (lengthCardNumber < 4)
+                {
+                    return "Insert at least 4 digits for Card Number";
+                }
+
+                else if (clientData.CVV < 0)
+                {
+                    return "CVV cannot be less than 0";
+                }
+
                 else if (lengthCVV > 5)
                 {
                     return "CVV has a max of 5 characters allowed";

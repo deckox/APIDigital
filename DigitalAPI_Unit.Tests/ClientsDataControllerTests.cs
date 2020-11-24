@@ -70,6 +70,24 @@ namespace DigitalAPI.Tests
 
         }
 
+
+        [Test]
+        public void Minimum_OfLengthCardId_Fail()
+        {
+            var clientController = new ClientsDataController();
+
+            var clientData = new ClientData()
+            {
+                CustomerId = 4,
+                CardNumber = 123,
+                CVV = 3333
+            };
+
+            var apiSaveCustomerResponse = clientController.API_SaveCustomerDataOnDB(clientData);
+            Assert.That(apiSaveCustomerResponse, Contains.Substring("Insert at least 4 digits for Card Number"));
+
+        }
+
         [Test]
         public void MoreThan_MaxLengthOf_CVV_Fail()
         {
@@ -84,6 +102,23 @@ namespace DigitalAPI.Tests
 
             var apiSaveCustomerResponse = clientController.API_SaveCustomerDataOnDB(clientData);
             Assert.That(apiSaveCustomerResponse, Contains.Substring("CVV has a max of 5 characters allowed"));
+
+        }
+
+        [Test]
+        public void CVV_CannotBe_LessThan_Zero()
+        {
+            var clientController = new ClientsDataController();
+
+            var clientData = new ClientData()
+            {
+                CustomerId = 4,
+                CardNumber = 1324567984651231,
+                CVV = -1
+            };
+
+            var apiSaveCustomerResponse = clientController.API_SaveCustomerDataOnDB(clientData);
+            Assert.That(apiSaveCustomerResponse, Contains.Substring("CVV cannot be less than 0"));
 
         }
 
